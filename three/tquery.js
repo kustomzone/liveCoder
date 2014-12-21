@@ -1998,7 +1998,7 @@ tQuery.registerStatic('createSphere', function(){
 });
 
 tQuery.registerStatic('createPlane', function(){
-	var ctor	= THREE.PlaneGeometry;
+	var ctor	= THREE.PlaneBufferGeometry;
 	var dflGeometry	= [1, 1, 16, 16];
 	return this._createMesh(ctor, dflGeometry, arguments)
 });

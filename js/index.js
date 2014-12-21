@@ -330,7 +330,7 @@ return;
 
   function plane(a,b,c,d) {
     var vec1 = b.clone().sub(a), vec2 = d.clone().sub(a);
-    return new THREE.PlaneGeometry(vec1.length(), vec2.length(), 1,1);
+    return new THREE.PlaneBufferGeometry(vec1.length(), vec2.length(), 1,1);
   }
 
   function createScrollbar(aceEditor) {

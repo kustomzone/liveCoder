@@ -80,7 +80,7 @@ function initEvents(inputState) {
   var el = world.renderer.domElement;
 
   function mouseDownRaw(evt) { window.onMouseDown(evt); }
-  function mouseUpRaw(evt) { window.onMouseUp(evt); }
+  function mouseUpRaw(evt)   { window.onMouseUp(evt); }
   function mouseMoveRaw(evt) {
     inputState.browserMousePosition.x = evt.pageX;
     inputState.browserMousePosition.y = evt.pageY;
