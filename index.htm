@@ -2,61 +2,48 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>CodeChisel3D 2014-12-16 demo</title>
+    <title>liveCoder demo</title>
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache" />
 
   </head>
   <body style="margin:0;">
     <!--ui related-->
-    <script type="text/javascript" src="js/dat.gui.js"></script>
-    <script type="text/javascript" src="js/mousetrap.js"></script>
-
+    <script type="text/javascript" src="app/dat.gui.js"></script>
+    <script type="text/javascript" src="app/mousetrap.js"></script>
+	
     <!--ace editor-->
-    <!-- script type="text/javascript" src="ace/ace.js"></script>
-    <script type="text/javascript" src="ace/ext/language_tools.js"></script>
-    <script type="text/javascript" src="ace/keyboard/emacs.js"></script -->
+	<script type="text/javascript" src="app/ace/src-noconflict/ace.js"></script>
+    <script type="text/javascript" src="app/ace/src-noconflict/ext-language_tools.js"></script>
+    <script type="text/javascript" src="app/ace/src-noconflict/keybinding-emacs.js"></script>
 	
-	<script type="text/javascript" src="ace/src-noconflict/ace.js"></script>
-    <script type="text/javascript" src="ace/src-noconflict/ext-language_tools.js"></script>
-    <script type="text/javascript" src="ace/src-noconflict/keybinding-emacs.js"></script>
-
     <!--three-->
-    <script type="text/javascript" src="three/three.js"></script>
-    <script type="text/javascript" src="three/examples/js/controls/OrbitControls.js"></script>
-    <script type="text/javascript" src="three/examples/js/controls/VRControls.js"></script>
-    <script type="text/javascript" src="three/examples/js/controls/TransformControls.js"></script>
-    <script type="text/javascript" src="three/examples/js/effects/VREffect.js"></script>
-    <script type="text/javascript" src="three/threex.domevents.js"></script>
+    <script type="text/javascript" src="app/three/three.js"></script>
+    <script type="text/javascript" src="app/three/OrbitControls.js"></script>
+    <script type="text/javascript" src="app/three/VRControls.js"></script>
+    <script type="text/javascript" src="app/three/TransformControls.js"></script>
+    <script type="text/javascript" src="app/three/VREffect.js"></script>
+    <script type="text/javascript" src="app/three/threex.domevents.js"></script>
+    <script type="text/javascript" src="app/three/threex.videotexture.js"></script>
+    <script type="text/javascript" src="app/three/threex.webcamtexture.js"></script>
 	
-    <script type="text/javascript" src="http://jeromeetienne.github.io/threex.videotexture/threex.videotexture.js"></script>
-    <script type="text/javascript" src="http://jeromeetienne.github.io/threex.videotexture/threex.webcamtexture.js"></script>
-
-    <!--tQuery-->
-    <script type="text/javascript" src="three/tquery.js"></script>
-    <script type="text/javascript" src="three/tquery-interface.js"></script>
-
-    <!--THREE-world-->
-    <script type="text/javascript" src="three/world.js"></script>
-
+    <!--tQuery + interface + world.js-->
+	<script type="text/javascript" src="app/tquery/tquery-world.dev.js"></script>
+	
     <!--lively.vm-->
-    <script type="text/javascript" src="js/lively.vm.dev.js"></script>
-
-    <!--codeeditor-3d-->
-    <script type="text/javascript" src="js/lib/helper.js"></script>
-    <script type="text/javascript" src="js/lib/index.js"></script>
-    <script type="text/javascript" src="js/lib/commands.js"></script>
-    <script type="text/javascript" src="js/lib/ace-helper.js"></script>
-    <script type="text/javascript" src="js/lib/canvas2d.js"></script>
-    <script type="text/javascript" src="js/lib/domevents.js"></script>
-    <script type="text/javascript" src="js/lib/raycasting.js"></script>
-    <script type="text/javascript" src="js/lib/mouseevents.js"></script>
-    <script type="text/javascript" src="js/lib/rendering.js"></script>
-    <script type="text/javascript" src="js/lib/autocomplete.js"></script>
-
+    <script type="text/javascript" src="app/lively/lively.vm.dev-bundle.js"></script>
+	
+	<!-- script type="text/javascript" src="app/lively.ast.dev.js"></script>
+    <script type="text/javascript" src="app/lively.vm.dev.js"></script -->
+	
+	<!--codeeditor-3d-->
+    <script type="text/javascript" src="app/three/three-codeeditor/codeeditor3d.dev.js"></script>
+	<script type="text/javascript" src="app/three/three-codeeditor/mode-javascript.js"></script>
+	<script type="text/javascript" src="app/three/three-codeeditor/theme-twilight.js"></script>
+    
     <!--lively-2-lively-->
-    <script type="text/javascript" src="js/lively2lively-browserified.js?name=three-codeeditor-simple&baseURL=http://lively-web.org:8080&autoload=true"></script></style>
-
+    <script type="text/javascript" src="app/lively/lively2lively-browserified.js?name=three-codeeditor-simple&baseURL=http://lively-web.org:8080&autoload=true"></script></style>
+	
     <!--scene setup-->
     <script type="text/javascript" >
       var htmlCode = document.documentElement.innerHTML;
@@ -75,7 +62,7 @@
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-
 
         var plane = new THREE.Mesh(
-            new THREE.PlaneGeometry(1000,1000, 20,20),
+            new THREE.PlaneBufferGeometry(1000,1000, 20,20),
             new THREE.MeshBasicMaterial({
               color: 0x00ffff, wireframe: true,
               side: THREE.DoubleSide}));
@@ -115,42 +102,54 @@
           codeEditor.setValue(htmlCode);
         } else {
           codeEditor.aceEditor.setOption("mode", "ace/mode/javascript");
-          // The demo is inspired by http://threejs.org/examples/#webgl_geometry_hierarchy2
+		  
           var welcomeText = 
-            "// Welcome to the CodeChisel3D demo!\n"
-            + "// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n"
+            "// 3D demo!\n"
+            + "// -=-=-=-=-=\n"
             + "\n"
-            + "// You can evaluate JavaScript code in this workspace\n"
-            + "// by pressing " + (isMac ? "CMD" : "Ctrl") + "-d. Select the entire text and evaluate it!\n"
-            + "// For more information see\n"
-            + "// http://robert.kra.hn/projects/live-programming-with-three-and-webvr\n"
+            + "// You can also evaluate JavaScript code in this workspace\n"
             + "\n"
-            + "codeEditor.alignWithCamera(\"left\", world.camera);\n"
             + "\n"
-            + "// create lots of boxes:\n"
-            + "var geometry = new THREE.BoxGeometry(100, 100, 100),\n"
-            + "    material = new THREE.MeshNormalMaterial(),\n"
-            + "    root = new THREE.Mesh(geometry, material),\n"
-            + "    object, parent = root;\n"
-            + "world.scene.add(root);\n"
+            + "                                LIST OF DEMOS\n"
+            + "                           ======================\n"
+            + "                             Updated 21/12/2014\n"
             + "\n"
-            + "lively.lang.arr.range(0,200).reduce(function(parent, _) {\n"
-            + "	object = new THREE.Mesh(geometry, material);\n"
-            + "	object.position.z = -100;\n"
-            + "	parent.add(object);\n"
-            + "  return object;\n"
-            + "}, root)\n"
             + "\n"
-            + "world.addAnimationCallback(\"anim\", function() {\n"
-            + "  var time = Date.now() * 0.001,\n"
-            + "      rx = Math.sin(time * 0.2) * 0.1,\n"
-            + "      ry = Math.sin(time * 0.3) * 0.1,\n"
-            + "      rz = Math.sin(time * 0.7) * 0.2;\n"
-            + "  root.traverse(function (object) { object.rotation.set(rx, ry, rz); });\n"
-            + "});\n"
-
-          codeEditor.setSize(550, 550);
-          codeEditor.setValue(welcomeText);
+            + "                              ================\n"
+            + "                              = Coding in 3D =\n"
+            + "                              ================\n"
+            + "\n"
+            + " Source: http://robert.kra.hn/projects/live-programming-with-three-and-webvr\n"
+            + "\n"
+            + "                 Demo: http://kustomzone.github.io/liveCoder\n"
+            + "\n"
+            + "\n"
+            + "                             ====================\n"
+            + "                             = 2D Level Editors =\n"
+            + "                             ====================\n"
+            + "\n"
+            + "                    Source: http://plexode.com/vorp/\n"
+            + "\n"
+            + "                  Demo: http://kustomzone.github.io/Droid/\n"
+            + "\n"
+            + "\n"
+			+ "                              ===============\n"
+            + "                              = 2048-custom =\n"
+            + "                              ===============\n"
+            + "\n"
+            + "               Source: http://gabrielecirulli.github.io/2048/\n"
+            + "\n"
+            + "               Demo: http://kustomzone.github.io/2048-custom/\n"
+            + "\n"
+            + "\n"
+			+ "\n"
+            + "\n"
+			+ " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+            + "                                ~~~~~~~~~\n"
+            + "\n";
+			
+		  codeEditor.setSize(580, 670);
+		  codeEditor.setValue(welcomeText);
         }
 
         if (world.orbitControl) {
@@ -162,7 +161,8 @@
         window.codeEditor = codeEditor;
       });
     </script>
-    <script type="text/javascript" src="js/lib/experiments.js"></script>
-
+    
+	<script type="text/javascript" src="app/experiments.js"></script>
+	
   </body>
 </html>
