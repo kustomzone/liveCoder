@@ -43,8 +43,7 @@
     
     <!--lively-2-lively-->
     <script type="text/javascript" src="app/lively/lively2lively-browserified.js?name=three-codeeditor-simple&baseURL=http://lively-web.org:8080&autoload=true"></script></style>
-	
->>>>>>> master
+    
     <!--scene setup-->
     <script type="text/javascript" >
       var htmlCode = document.documentElement.innerHTML;
@@ -148,23 +147,23 @@
 			+ " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
             + "                                ~~~~~~~~~\n"
             + "\n";
-			
-
+	    
 	    codeEditor.setSize(580, 670);
 	    codeEditor.setValue(welcomeText);
         }
-
+	
         if (world.orbitControl) {
           world.orbitControl.target = codeEditor.position.clone();
         } else world.camera.lookAt(codeEditor.position);
-
+	
         // For debugging
         window.world = world;
         window.codeEditor = codeEditor;
       });
+      
     </script>
     
     <script type="text/javascript" src="app/experiments.js"></script>
-	
+    	
   </body>
 </html>
